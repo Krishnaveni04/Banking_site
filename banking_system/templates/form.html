@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: white;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
+
+
+/* Overwrite default styles of hr */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+
+  .button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+.table{
+font-size=30px;
+}
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+var subjectObject = {
+  "South-kerala": {
+    "Trivandrum": ["Kazhakootam", "Chala", "Thambanoor", "Venjaramood"],
+    "Kollam": ["Kottarakara", "Kundara", "Kottiyam", "Shasthamkotta"],
+    "Kottayam": ["Ettumanoor", "Pala", "Chenganacherry", "Ponkunnam"]
+  },
+  "North-kerala": {
+    "Ernakulam": ["Kakkanad", "Vytila", "Kochi"],
+    "Kannur": ["Payyanur", "Thalacherry", "Mattannur"]
+  }
+}
+window.onload = function() {
+  var subjectSel = document.getElementById("subject");
+  var topicSel = document.getElementById("topic");
+  var chapterSel = document.getElementById("chapter");
+  for (var x in subjectObject) {
+    subjectSel.options[subjectSel.options.length] = new Option(x, x);
+  }
+  subjectSel.onchange = function() {
+    //empty Chapters- and Topics- dropdowns
+    chapterSel.length = 1;
+    topicSel.length = 1;
+    //display correct values
+    for (var y in subjectObject[this.value]) {
+      topicSel.options[topicSel.options.length] = new Option(y, y);
+    }
+  }
+  topicSel.onchange = function() {
+    //empty Chapters dropdown
+    chapterSel.length = 1;
+    //display correct values
+    var z = subjectObject[subjectSel.value][this.value];
+    for (var i = 0; i < z.length; i++) {
+      chapterSel.options[chapterSel.options.length] = new Option(z[i], z[i]);
+    }
+  }
+}
+</script>
+</head>
+<body>
+<form >
+<h1>Fill the Form</h1>
+{% csrf_token %}
+
+<table>
+  <tr>
+    <td><label for="name">Name:</label></td>
+    <td><input type="text" name="name" id="name" placeholder="Name"></td>
+  </tr>
+  <tr>
+    <td><label for="dob">DOB:</label></td>
+    <td><input type="date" name="dob" id="dob" placeholder="DOB"></td>
+  </tr>
+  <tr>
+    <td><label for="age">Age:</label></td>
+    <td><input type="number" name="number" id="number" placeholder="Age"></td>
+  </tr>
+  <tr>
+    <td><label for="gender">Gender:</label></td>
+    <td>Male: <input type="radio" name="gender" value="male">
+      Female: <input type="radio" name="gender" value="female">
+      Transgender: <input type="radio" name="gender" value="Transgender"></td>
+  </tr>
+  <tr>
+    <td><label for="phoneNumber">Phone Number:</label></td>
+    <td><input type="number" name="phoneNumber" id="phoneNumber"></td>
+  </tr>
+  <tr>
+    <td><label for="email">Email:</label></td>
+    <td><input type="text" name="email" id="email" placeholder="your email"></td>
+  </tr>
+  <tr>
+    <td><label for="password">Password:</label></td>
+    <td><input type="password" name="password" id="password"></td>
+  </tr>
+  <tr>
+    <td><label for="address">Address:</label></td>
+    <td><textarea name="address" id="address" placeholder="Address"></textarea></td>
+  </tr>
+<td>
+<form name="form1" id="form1" action="/action_page.php">
+Region: <select name="subject" id="subject">
+    <option value="" selected="selected">Select region</option>
+  </select>
+  <br><br>
+District: <select name="topic" id="topic">
+    <option value="" selected="selected">Please select region first</option>
+  </select>
+  <br><br>
+Branch: <select name="chapter" id="chapter">
+    <option value="" selected="selected">Please select district first</option>
+  </select>
+  <br><br>
+    </tr>
+    </form>
+   <tr>
+    <td><label for="Account">Account Type</label></td>
+    <td>
+      <select id="account" name="account">
+        <option value="">Choose</option>
+        <option value="Savings">Savings</option>
+        <option value="Current">Current</option>
+      </select></td>
+  </tr>
+
+    <td><label for="material">Materials Required :</label></td>
+    <td>
+      <input type="checkbox" id="debit" name="materials[]" value="Debit Card">
+      <label for="debit">Debit Card</label>
+      <input type="checkbox" id="credit" name="materials[]" value="Credit Card">
+      <label for="credit">Credit Card</label>
+      <input type="checkbox" id="cheque" name="materials[]" value="Chequebook">
+      <label for="debit">Cheque Book</label></td>
+
+
+<tr>
+<td>
+    <li><a href="messages" class="button">Submit</a></li> <br>
+</td>
+  </tr>
+  <tr>
+  <td>
+    <li><a href="logout" class="button">Logout</a></li>
+  </td>
+</tr>
+</table>
+</form>
+</body>
+</html>
